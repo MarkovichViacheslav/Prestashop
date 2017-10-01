@@ -9,6 +9,8 @@ public class Properties {
     private static final String DEFAULT_BASE_URL = "http://prestashop-automation.qatestlab.com.ua/";
     private static final String DEFAULT_BASE_ADMIN_URL = "http://prestashop-automation.qatestlab.com.ua/admin147ajyvk0/";
     private static final String DEFAULT_BROWSER = BrowserType.CHROME;
+   // private static final String DEFAULT_BROWSER = BrowserType.IE;
+   //private static final String DEFAULT_BROWSER = BrowserType.FIREFOX;
 
     /**
      *

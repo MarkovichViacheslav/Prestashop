@@ -1,166 +1,267 @@
 package myprojects.automation.assignment2.tests;
 
 import myprojects.automation.assignment2.BaseScript;
+import myprojects.automation.assignment2.utils.Properties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class CheckMainMenuTest extends BaseScript{
 
+    private static WebDriver driver = getConfiguredDriver();
+    private static By emailField = By.id("email");
+    private static By passwordField = By.id("passwd");
+    private static By loginButton = By.name("submitLogin");
+    private static String emailText = "webinar.test@gmail.com";
+    private static String passwordText = "Xcg7299bnSmMuRLp9ITw";
+
+    private static By sectionHeader = By.tagName("h2");
+    private static By dashBoardTab = By.id("tab-AdminDashboard");
+    private static By ordersTab = By.id("subtab-AdminParentOrders");
+    private static By catalogTab = By.id("subtab-AdminCatalog");
+    private static By clientsTab = By.cssSelector(".main-menu > li:nth-of-type(5)");
+    private static By supportTab = By.id("subtab-AdminParentCustomerThreads");
+    private static By statsTab = By.id("subtab-AdminStats");
+    private static By modulesTab = By.id("subtab-AdminParentModulesSf");
+    private static By designTab = By.cssSelector(".main-menu > li:nth-of-type(10)");
+    private static By shippingTab = By.id("subtab-AdminParentShipping");
+    private static By paymentTab = By.id("subtab-AdminParentPayment");
+    private static By internationalTab = By.id("subtab-AdminInternational");
+    private static By shopTab = By.id("subtab-ShopParameters");
+    private static By configurationTab = By.id("subtab-AdminAdvancedParameters");
+
+    public static void loggingToAdminPanel() throws InterruptedException {
+        fillEmailField();
+        fillPasswordField();
+        clickLoginButton();
+    }
+
+    public static void fillEmailField(){
+        driver.findElement(emailField).sendKeys(emailText);
+    }
+
+    public static void fillPasswordField(){
+        driver.findElement(passwordField).sendKeys(passwordText);
+    }
+
+    public static void clickLoginButton() throws InterruptedException {
+        driver.findElement(loginButton).submit();
+        Thread.sleep(5000);
+    }
+
+    public static void clickDashBoardTab(){
+        driver.findElement(dashBoardTab).click();
+    }
+
+    public static void clickOrdersTab(){
+        driver.findElement(ordersTab).click();
+    }
+
+    public static void clickCatalogTab(){
+        driver.findElement(catalogTab).click();
+    }
+
+    public static void clickClientsTab(){
+        driver.findElement(clientsTab).click();
+    }
+
+    public static void clickSupportTab(){
+        driver.findElement(supportTab).click();
+    }
+
+    public static void clickStatsTab(){
+        driver.findElement(statsTab).click();
+    }
+
+    public static void clickModulesTab(){
+        driver.findElement(modulesTab).click();
+    }
+
+    public static void clickDesignTab(){
+        driver.findElement(designTab).click();
+    }
+
+    public static void clickShippingTab(){
+        driver.findElement(shippingTab).click();
+    }
+
+    public static void clickPaymentTab(){
+        driver.findElement(paymentTab).click();
+    }
+
+    public static void clickInternationalTab(){
+        driver.findElement(internationalTab).click();
+    }
+    
+    public static void clickShopTab(){
+        driver.findElement(shopTab).click();
+    }
+
+    public static void clickConfigurationTab(){
+        driver.findElement(configurationTab).click();
+    }
+
+    public static String getHeaderName(WebElement element){
+        String headerName = element.getText();
+        return headerName;
+    }
+    // printing header to console*/
+    public static void printHeaderName(String headerName){
+        System.out.println(headerName);
+    }
+
+    public static void reloadPage(){
+        driver.navigate().refresh();
+    }
+    // checking that user is on the the same section after page reload
+    private static void checkHeaderAfterReloadPage(String header, String headerAfterReload) {
+
+        if (header.equals(headerAfterReload)) {
+            System.out.println("User is on the the same section after page reload");
+        } else {
+            System.out.println("Not the same section after page reload");
+        }
+    }
+
     public static void main(String[] args) throws InterruptedException {
         // TODO Script to check Main Menu items
 
-        WebDriver driver = getDriver();
-        driver.navigate().to("http://prestashop-automation.qatestlab.com.ua/admin147ajyvk0/");
+        driver.navigate().to(Properties.getBaseAdminUrl());
 
-        //logging to AdminPanel
-        driver.findElement(By.id("email")).sendKeys("webinar.test@gmail.com");
-        driver.findElement(By.id("passwd")).sendKeys("Xcg7299bnSmMuRLp9ITw");
-        driver.findElement(By.name("submitLogin")).submit();
-        Thread.sleep(5000);
+        loggingToAdminPanel();
 
         //navigating to "Dashboard"
-        driver.findElement(By.id("tab-AdminDashboard")).click();
-        WebElement dashboardHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String dashboardHeaderName = dashboardHeader.getText();
-        System.out.println(dashboardHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement dashboardHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String dashboardHeaderName2 = dashboardHeader2.getText();
+        clickDashBoardTab();
+        WebElement dashboardHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String dashboardHeaderName = getHeaderName(dashboardHeader);
+        printHeaderName(dashboardHeaderName);
+        reloadPage();
+        WebElement dashboardHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String dashboardHeaderName2 = getHeaderName( dashboardHeaderAfterReload);
         checkHeaderAfterReloadPage(dashboardHeaderName, dashboardHeaderName2);
 
         //navigating to "Заказы"
-        driver.findElement(By.id("subtab-AdminParentOrders")).click();
-        WebElement orderHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String orderHeaderName = orderHeader.getText();
-        System.out.println(orderHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement orderHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String orderHeaderName2 = orderHeader2.getText();
-        checkHeaderAfterReloadPage(orderHeaderName, orderHeaderName2);
+        clickOrdersTab();
+        WebElement ordersHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String ordersHeaderName = getHeaderName(ordersHeader);
+        printHeaderName(ordersHeaderName);
+        reloadPage();
+        WebElement ordersHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String ordersHeaderName2 = getHeaderName(ordersHeaderAfterReload);
+        checkHeaderAfterReloadPage(ordersHeaderName, ordersHeaderName2);
 
         //navigating to "Каталог"
-        driver.findElement(By.id("subtab-AdminCatalog")).click();
-        WebElement catalogHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String catalogHeaderName = catalogHeader.getText();
-        System.out.println(catalogHeaderName); // printing header to console
-        driver.navigate().refresh(); //page reload
-        WebElement catalogHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String catalogHeaderName2 = catalogHeader2.getText();
+        clickCatalogTab();
+        WebElement catalogHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String catalogHeaderName = getHeaderName(catalogHeader);
+        printHeaderName(catalogHeaderName);
+        reloadPage();
+        WebElement catalogHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String catalogHeaderName2 = getHeaderName(catalogHeaderAfterReload);
         checkHeaderAfterReloadPage(catalogHeaderName, catalogHeaderName2);
 
         //navigating to "Клиенты"
-        driver.findElement(By.cssSelector(".main-menu > li:nth-of-type(5)")).click();
-        WebElement clientsHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String clientsHeaderName = clientsHeader.getText();
-        System.out.println(clientsHeaderName); // printing header to console
-        driver.navigate().refresh(); //page reload
-        WebElement clientsHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String clientsHeaderName2 = clientsHeader2.getText();
+        clickClientsTab();
+        WebElement clientsHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String clientsHeaderName = getHeaderName(clientsHeader);
+        printHeaderName(clientsHeaderName); // printing header to console
+        reloadPage();
+        WebElement clientsHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String clientsHeaderName2 = getHeaderName(clientsHeaderAfterReload);
         checkHeaderAfterReloadPage(clientsHeaderName, clientsHeaderName2);
 
         //navigating to "Служба поддержки"
-        driver.findElement(By.id("subtab-AdminParentCustomerThreads")).click();
-        WebElement supportHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String supportHeaderName = supportHeader.getText();
-        System.out.println(supportHeaderName); // printing header to console
-        driver.navigate().refresh(); //page reload
-        WebElement supportHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String supportHeaderName2 = supportHeader2.getText();
+        clickSupportTab();
+        WebElement supportHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String supportHeaderName = getHeaderName(supportHeader);
+        printHeaderName(supportHeaderName); // printing header to console
+        reloadPage();
+        WebElement supportHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String supportHeaderName2 = getHeaderName(supportHeaderAfterReload);
         checkHeaderAfterReloadPage(supportHeaderName, supportHeaderName2);
 
         //navigating to "Статистика"
-        driver.findElement(By.id("subtab-AdminStats")).click();
-        WebElement statsHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String statsHeaderName = statsHeader.getText();
-        System.out.println(statsHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement statsHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String statsHeaderName2 = statsHeader2.getText();
+        clickStatsTab();
+        WebElement statsHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String statsHeaderName = getHeaderName(statsHeader);
+        printHeaderName(statsHeaderName);
+        reloadPage();
+        WebElement statsHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String statsHeaderName2 = getHeaderName(statsHeaderAfterReload);
         checkHeaderAfterReloadPage(statsHeaderName, statsHeaderName2);
 
         //navigating to "Modules"
-        driver.findElement(By.id("subtab-AdminParentModulesSf")).click();
-        WebElement modulesHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String modulesHeaderName = modulesHeader.getText();
-        System.out.println(modulesHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement modulesHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String modulesHeaderName2 = modulesHeader2.getText();
+        clickModulesTab();
+        WebElement modulesHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String modulesHeaderName = getHeaderName(modulesHeader);
+        printHeaderName(modulesHeaderName);
+        reloadPage();
+        WebElement modulesHeaderAfterReload  = driver.findElement(sectionHeader); //finding header of the opened section
+        String modulesHeaderName2 = getHeaderName(modulesHeaderAfterReload);
         checkHeaderAfterReloadPage(modulesHeaderName, modulesHeaderName2);
 
         //navigating to "Design"
-        driver.findElement(By.cssSelector(".main-menu > li:nth-of-type(10)")).click();
-        WebElement designHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String designHeaderName = designHeader.getText();
-        System.out.println(designHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement designHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String designHeaderName2 = designHeader2.getText();
+        clickDesignTab();
+        WebElement designHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String designHeaderName = getHeaderName(designHeader);
+        printHeaderName(designHeaderName);
+        reloadPage();
+        WebElement designHeaderAfterReload  = driver.findElement(sectionHeader); //finding header of the opened section
+        String designHeaderName2 = getHeaderName(designHeaderAfterReload);
         checkHeaderAfterReloadPage(designHeaderName, designHeaderName2);
 
         //navigating to "Доставка"
-        driver.findElement(By.id("subtab-AdminParentShipping")).click();
-        WebElement shippingHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String shippingHeaderName = shippingHeader.getText();
-        System.out.println(shippingHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement shippingHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String shippingHeaderName2 = shippingHeader2.getText();
+        clickShippingTab();
+        WebElement shippingHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String shippingHeaderName = getHeaderName(shippingHeader);
+        printHeaderName(shippingHeaderName);
+        reloadPage();
+        WebElement shippingHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String shippingHeaderName2 = getHeaderName(shippingHeaderAfterReload);
         checkHeaderAfterReloadPage(shippingHeaderName, shippingHeaderName2);
 
         //navigating to "Способ оплаты"
-        driver.findElement(By.id("subtab-AdminParentPayment")).click();
-        WebElement paymentHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String paymentHeaderName = paymentHeader.getText();
-        System.out.println(paymentHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement paymentHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String paymentHeaderName2 = paymentHeader2.getText();
+        clickPaymentTab();
+        WebElement paymentHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String paymentHeaderName = getHeaderName(paymentHeader);
+        printHeaderName(paymentHeaderName);
+        reloadPage();
+        WebElement paymentHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String paymentHeaderName2 = getHeaderName(paymentHeaderAfterReload);
         checkHeaderAfterReloadPage(paymentHeaderName, paymentHeaderName2);
 
         //navigating to "International"
-        driver.findElement(By.id("subtab-AdminInternational")).click();
-        WebElement internationalHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String internationalHeaderName = internationalHeader.getText();
-        System.out.println(internationalHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement internationalHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String internationalHeaderName2 = internationalHeader2.getText();
+        clickInternationalTab();
+        WebElement internationalHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String internationalHeaderName = getHeaderName(internationalHeader);
+        printHeaderName(internationalHeaderName);
+        reloadPage();
+        WebElement internationalHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String internationalHeaderName2 = getHeaderName(internationalHeaderAfterReload);
         checkHeaderAfterReloadPage(internationalHeaderName, internationalHeaderName2);
 
         //navigating to "Shop Parameters"
-        driver.findElement(By.id("subtab-ShopParameters")).click();
-        WebElement shopHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String shopHeaderName = shopHeader.getText();
-        System.out.println(shopHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement shopHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String shopHeaderName2 = shopHeader2.getText();
+        clickShopTab();
+        WebElement shopHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String shopHeaderName = getHeaderName(shopHeader);
+        printHeaderName(shopHeaderName);
+        reloadPage();
+        WebElement shopHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String shopHeaderName2 = getHeaderName(shopHeaderAfterReload);
         checkHeaderAfterReloadPage(shopHeaderName, shopHeaderName2);
 
         //navigating to "Конфигурация"
-        driver.findElement(By.id("subtab-AdminAdvancedParameters")).click();
-        WebElement configurationHeader = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String configurationHeaderName = configurationHeader.getText();
-        System.out.println(configurationHeaderName); // printing header to console*/
-        driver.navigate().refresh(); //page reload
-        WebElement configurationHeader2 = driver.findElement(By.tagName("h2")); //finding header of the opened section
-        String configurationHeaderName2 = configurationHeader2.getText();
+        clickConfigurationTab();
+        WebElement configurationHeader = driver.findElement(sectionHeader); //finding header of the opened section
+        String configurationHeaderName = getHeaderName(configurationHeader);
+        printHeaderName(configurationHeaderName);
+        reloadPage();
+        WebElement configurationHeaderAfterReload = driver.findElement(sectionHeader); //finding header of the opened section
+        String configurationHeaderName2 = getHeaderName(configurationHeaderAfterReload);;
         checkHeaderAfterReloadPage(configurationHeaderName, configurationHeaderName2);
 
-        driver.close();
+        quitDriver(driver);
     }
 
-        // checking that user is on the the same section after page reload
-        private static void checkHeaderAfterReloadPage(String header, String headerAfterRefresh){
-
-        if(header.equals(headerAfterRefresh)) {
-            System.out.println("User is on the the same section after page reload");
-        }
-        else{
-            System.out.println("Not the same section after page reload");
-        }
-        }
 }
 
