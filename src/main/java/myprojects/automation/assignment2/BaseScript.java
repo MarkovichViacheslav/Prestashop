@@ -36,9 +36,7 @@ public abstract class BaseScript {
                             new File(BaseScript.class.getResource("/chromedriver.exe").getFile()).getPath());
                     return new ChromeDriver();
             }
-      /*  try {
-            System.setProperty("webdriver.chrome.driver", "C:/Program Files/Google/Chrome/chromedriver.exe");
-            return new ChromeDriver();*/
+      
         } catch (UnsupportedOperationException exc) {
             throw new UnsupportedOperationException("Method doesn't return WebDriver instance");
         }
